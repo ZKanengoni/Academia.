@@ -99,6 +99,25 @@ class LecturerEditor : View("Lecturer Admin") {
                         paddingBottom = 20
                     }
                 }
+
+                hbox {
+                    fieldset {
+                        label("Search for lecturer:")
+                        field {
+                            maxWidth = 200.0
+                            textfield(model.lecturerName) {
+                                this.required()
+
+                                validator {
+                                    when {
+                                        it.isNullOrEmpty() -> error("Field cannot be empty")
+                                        else -> null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

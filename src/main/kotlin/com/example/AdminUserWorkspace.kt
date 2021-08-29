@@ -11,6 +11,7 @@ import javafx.scene.control.TabPane
 import org.jetbrains.exposed.sql.Database
 import tornadofx.*
 
+
 class AdminUserWorkspace : Workspace("Admin Workspace", NavigationMode.Tabs) {
 
     init {

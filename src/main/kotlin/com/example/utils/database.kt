@@ -25,6 +25,8 @@ fun createTables() {
         SchemaUtils.create(StudentSubjectTbl)
         SchemaUtils.create(LecturerSubjectTbl)
         SchemaUtils.create(SubjectTbl)
+        SchemaUtils.create(UserTbl)
+//        SchemaUtils.createFKey()
     }
 }
 

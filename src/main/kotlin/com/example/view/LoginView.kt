@@ -1,12 +1,24 @@
 package com.example.view
 
 import com.example.AdminUserWorkspace
+import com.example.controller.UserController
+import com.example.model.UserEntryModel
+import com.example.utils.createTables
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
+import org.jetbrains.exposed.sql.Database
 import tornadofx.*
 
 class LoginView : View("Academia.") {
+
+
+    private val model = UserEntryModel()
+    private val controller: UserController by inject()
+
+    init {
+        Database.connect("jdbc:sqlite:./app-academia.db", "org.sqlite.JDBC")
+    }
 
     private val bgColour = c("#FFFFFF")
     private val buttonColour = c("#53616C")
@@ -57,7 +69,7 @@ class LoginView : View("Academia.") {
                     }
 
                     field {
-                        textfield () {
+                        textfield (model.username) {
                             style {
                                 setPrefHeight(36.0)
                                 setMaxWidth(280.0)
@@ -77,7 +89,7 @@ class LoginView : View("Academia.") {
                     }
 
                     field {
-                        passwordfield() {
+                        passwordfield(model.password) {
                             style {
                                 setPrefHeight(36.0)
                                 setMaxWidth(280.0)
@@ -93,6 +105,7 @@ class LoginView : View("Academia.") {
 
                         action {
                             loginUser()
+//                            addUser()
                         }
 
                         style {
@@ -114,6 +127,19 @@ class LoginView : View("Academia.") {
     }
 
     private fun loginUser() {
-        replaceWith<AdminUserWorkspace>()
+
+        model.commit {
+            if(  controller.login(
+                    model.username.value,
+                    model.password.value
+                ) ) {
+                replaceWith<AdminUserWorkspace>()
+                print("Clicked")
+            }
+
+        }
+
+
     }
+
 }
